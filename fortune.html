@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 주역 운세</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>오늘의 주역 운세</h1>
+    <p>생년월일을 입력하시면 오늘의 괘를 풀이해 드립니다</p>
+
+    <label for="name">이름</label>
+    <input type="text" id="name" placeholder="예: 최종덕">
+
+    <label for="birth">생년월일</label>
+    <input type="date" id="birth">
+
+    <button id="btn-fortune">운세 보기</button>
+
+    <div id="result"></div>
+
+    <script>
+        const button = document.getElementById('btn-fortune');
+        const resultBox = document.getElementById('result');
+
+        button.addEventListener('click', async () => {
+            const name = document.getElementById('name').value;
+            const birth = document.getElementById('birth').value;
+
+            if (!birth) {
+                resultBox.textContent = '생년월일을 입력해 주세요.';
+                return;
+            }
+
+            // 대기 상태 (피그마의 "괘를 뽑고 있습니다" 대기화면 역할)
+            button.disabled = true;
+            resultBox.textContent = '괘를 뽑고 있습니다...';
+
+            try {
+                const response = await fetch('/api/fortune', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, birth })
+                });
+
+                const data = await response.json();
+
+                if (data.fortune) {
+                    resultBox.textContent = data.fortune;
+                } else {
+                    resultBox.textContent = data.error || '운세를 가져오지 못했습니다.';
+                }
+            } catch (err) {
+                resultBox.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+            } finally {
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
