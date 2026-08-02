@@ -1,0 +1,41 @@
+ol {
+            background-color: #f5f7fa;
+            padding: 16px 16px 16px 48px;
+            border-radius: 8px;
+        }
+        .card-box {
+            display: flex;
+            gap: 16px;
+        }
+        .card {
+            flex: 1;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        @media (max-width: 600px) {
+            .card-box {
+                flex-direction: column;
+            }
+        }
+                nav {
+            display: flex;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 24px;
+        }
+        nav a {
+            color: #1a3a6e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        map {
+    aspect-ratio: 4 / 3;
+    border: 0;
+}
+.form {
+    aspect-ratio: auto;
+    height: 900px;
+    border: 0;
+}
